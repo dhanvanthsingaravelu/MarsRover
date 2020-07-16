@@ -156,29 +156,24 @@ $.extend(Controller, {
         );
         
         if(path1.length<path2.length){
-            this.path=[];
-            this.path.push(path1);
-        }
-        else{
-            this.path=[];
-            this.path.push(path2);
-        }
-        if(path1.length<path2.length){
             path3 = finder.findPath(
                 this.endX, this.endY, this.endXtwo, this.endYtwo, grid2
             );
+            this.path=path1.concat(path3);
         }
         else{
             path3 = finder.findPath(
                 this.endXtwo, this.endYtwo, this.endX, this.endY, grid2
             );
+            this.path=path2.concat(path3);
         }
+        
         
        
         // for (item in dirty){
         //     View.setCoordDirtyCust(item[0],item[1],true);
         // }
-        this.path.push(path3);
+        //this.path.push(path3);
         // console.log("grid",instanceof(grid));
         // console.log("grid1",typeof(grid1));
         // console.log("grid2",typeof(grid2));
@@ -217,13 +212,12 @@ $.extend(Controller, {
     },
     onfinish: function(event, from, to) {
         View.showStats({
-            pathLength: PF.Util.pathLength(this.path[0]) + PF.Util.pathLength(this.path[1]) ,
+            pathLength: PF.Util.pathLength(this.path) ,
             timeSpent:  this.timeSpent,
             operationCount: this.operationCount,
         });
-        View.drawPath(this.path[0]);
-        View.drawPath(this.path[1]);
-        
+        View.drawPath(this.path);
+                
         // => finished
     },
     onclear: function(event, from, to) {
@@ -574,3 +568,4 @@ $.extend(Controller, {
         return this.isStartPos(gridX, gridY) || this.isEndPos(gridX, gridY)||this.isEndPostwo(gridX, gridY);
     },
 });
+

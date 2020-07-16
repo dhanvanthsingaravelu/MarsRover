@@ -15,6 +15,7 @@ var View = {
         },
         start: {
             fill: '#0d0',
+            //'background-image': '158575-200.png',
             'stroke-opacity': 0.2,
         },
         end: {
