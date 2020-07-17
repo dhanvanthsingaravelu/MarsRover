@@ -132,7 +132,7 @@ var View = {
     },
     clearStartEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
-        this.paper.rect(
+        this.rects[gridY][gridX]=this.paper.rect(
             coord[0],
             coord[1],
             this.nodeSize,
