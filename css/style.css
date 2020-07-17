@@ -36,6 +36,10 @@ h1, h2, h3, h4, h5, h6 {
     width: 250px;
     right: 20px;
 }
+.left_panel {
+    width: 250px;
+    left: 20px;
+}
 
 #algorithm_panel {
     right: 20px;
@@ -43,10 +47,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #instructions_panel {
-    top: 20px;
-    left: 20px;
+    top: 240px;
+    left: 260px;
     width: 550px;
 }
+#options {
+    top: 20px;
+    left: 20px;
+    width: 300px;
+}
+
 
 #hide_instructions {
     position: absolute;

@@ -41,6 +41,15 @@
       Choose an algorithm from the right-hand panel. <br>
       Click Start Search in the lower-right corner to start the animation.
     </div>
+    <div id="options" class="panel">
+      <header><h2 class="header_title">Give your choice</h2></header>
+      <div id="choices" >
+        <input type="radio" name="option" onclick="Controller.setDefaultStartEndPos()" value="one" />
+        <label class="option_label">1 start 1 destination shortsest path</label> <br>
+        <input type="radio" name="option" onclick="Controller.setDefaultStartEndPos()" value="two" checked />
+        <label class="option_label">1 start 2 destination immediate shortsest path</label> <br>
+      </div>
+    </div>
 
     <div id="algorithm_panel" class="panel right_panel">
       <header><h2 class="header_title">Select Algorithm</h2></header>

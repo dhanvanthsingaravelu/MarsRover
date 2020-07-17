@@ -134,56 +134,58 @@ $.extend(Controller, {
         // => erasingWall
     },
     onsearch: function(event, from, to) {
-        console.log("from",from);
-        console.log("to",to);
-        var grid,path1,path2,path3,
+        //console.log("from",from)
+        if($('input[name=option]:checked').val()==="one"){
+            var grid,
             timeStart, timeEnd,
-            finder = Panel.getFinder(),
-            //finder1 = Panel.getFinder();
-        
-      
-        timeStart = window.performance ? performance.now() : Date.now();
-        grid = this.grid.clone();
-        grid1=this.grid.clone();
-        grid2=this.grid.clone();
-        
-        path1 = finder.findPath(
-            this.startX, this.startY, this.endX, this.endY, grid
-        );
-        
-        path2 = finder.findPath(
-            this.startX, this.startY, this.endXtwo, this.endYtwo, grid1
-        );
-        
-        if(path1.length<path2.length){
-            path3 = finder.findPath(
-                this.endX, this.endY, this.endXtwo, this.endYtwo, grid2
+            finder = Panel.getFinder();
+            timeStart = window.performance ? performance.now() : Date.now();
+            grid = this.grid.clone();
+            this.path = finder.findPath(
+                this.startX, this.startY, this.endX, this.endY, grid
             );
-            this.path=path1.concat(path3);
+            
+            this.operationCount = this.operations.length;
+            timeEnd = window.performance ? performance.now() : Date.now();
+            this.timeSpent = (timeEnd - timeStart).toFixed(4);
+
+            this.loop();
         }
         else{
-            path3 = finder.findPath(
-                this.endXtwo, this.endYtwo, this.endX, this.endY, grid2
+            var grid,path1,path2,path3,
+            timeStart, timeEnd,
+            finder = Panel.getFinder();
+            timeStart = window.performance ? performance.now() : Date.now();
+            grid = this.grid.clone();
+            grid1=this.grid.clone();
+            grid2=this.grid.clone();
+            path1 = finder.findPath(
+                this.startX, this.startY, this.endX, this.endY, grid
             );
-            this.path=path2.concat(path3);
+            path2 = finder.findPath(
+                this.startX, this.startY, this.endXtwo, this.endYtwo, grid1
+            );
+            if(path1.length<path2.length){
+                path3 = finder.findPath(
+                    this.endX, this.endY, this.endXtwo, this.endYtwo, grid2
+                );
+                this.path=path1.concat(path3);
+            }
+            else{
+                path3 = finder.findPath(
+                    this.endXtwo, this.endYtwo, this.endX, this.endY, grid2
+                );
+                this.path=path2.concat(path3);
+            }
+            this.operationCount = this.operations.length;
+            timeEnd = window.performance ? performance.now() : Date.now();
+            this.timeSpent = (timeEnd - timeStart).toFixed(4);
+
+            this.loop();
+        // => searching
         }
         
         
-       
-        // for (item in dirty){
-        //     View.setCoordDirtyCust(item[0],item[1],true);
-        // }
-        //this.path.push(path3);
-        // console.log("grid",instanceof(grid));
-        // console.log("grid1",typeof(grid1));
-        // console.log("grid2",typeof(grid2));
-        
-        this.operationCount = this.operations.length;
-        timeEnd = window.performance ? performance.now() : Date.now();
-        this.timeSpent = (timeEnd - timeStart).toFixed(4);
-
-        this.loop();
-        // => searching
     },
     onrestart: function() {
         // When clearing the colorized nodes, there may be
@@ -513,6 +515,7 @@ $.extend(Controller, {
      * It will detect user's display size, and compute the best positions.
      */
     setDefaultStartEndPos: function() {
+        this.clearStartEndpos();
         var width, height,
             marginRight, availWidth,
             centerX, centerY,
@@ -529,10 +532,15 @@ $.extend(Controller, {
         centerX = Math.ceil(availWidth / 2 / nodeSize);
         centerY = Math.floor(height / 2 / nodeSize);
 
-        this.setStartPos(centerX - 5, centerY);
-        this.setEndPostwo(centerX ,centerY +5);
-        this.setEndPos(centerX + 5, centerY);
-        
+        if($('input[name=option]:checked').val()==="one"){
+            this.setStartPos(centerX - 5, centerY);
+            this.setEndPos(centerX + 5, centerY);
+        }
+        else{
+            this.setStartPos(centerX - 5, centerY);
+            this.setEndPostwo(centerX ,centerY +5);
+            this.setEndPos(centerX + 5, centerY);
+        }    
     },
     setStartPos: function(gridX, gridY) {
         this.startX = gridX;
@@ -549,6 +557,24 @@ $.extend(Controller, {
         this.endXtwo = gridX;
         this.endYtwo = gridY;
         View.setEndPostwo(gridX, gridY);
+    },
+    clearStartEndpos : function(){
+        if(((this.startX!=undefined)||(this.startX!=null))&&((this.startY!=undefined)||(this.startX!=null))){
+            View.clearStartEndPos(this.startX,this.startY);
+            this.startX=null;
+            this.startY=null;
+        }
+        if(((this.endX!=undefined)||(this.endX!=null))&&((this.endY!=undefined)||(this.endY!=null))){
+            View.clearStartEndPos(this.endX,this.endY);
+            this.endX=null;
+            this.endY=null;
+        }
+        if(((this.endXtwo!=undefined)||(this.endXtwo!=null))&&((this.endYtwo!=undefined)||(this.endYtwo!=null))){
+            View.clearStartEndPos(this.endXtwo,this.endYtwo);
+            this.endXtwo=null;
+            this.endYtwo=null;
+        }
+
     },
     
     setWalkableAt: function(gridX, gridY, walkable) {

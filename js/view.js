@@ -130,6 +130,16 @@ var View = {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
     },
+    clearStartEndPos: function(gridX, gridY) {
+        var coord = this.toPageCoordinate(gridX, gridY);
+        this.paper.rect(
+            coord[0],
+            coord[1],
+            this.nodeSize,
+            this.nodeSize
+        ).attr(this.nodeStyle.normal)
+    },
+    
     setEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNode) {
