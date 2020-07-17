@@ -531,6 +531,7 @@ $.extend(Controller, {
      * It will detect user's display size, and compute the best positions.
      */
     setDefaultStartEndPos: function() {
+        this.clearAll();
         View.clearStartEndPos();
         var width, height,
         marginRight, availWidth,
