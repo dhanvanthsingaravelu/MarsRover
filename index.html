@@ -44,9 +44,9 @@
     <div id="options" class="panel">
       <header><h2 class="header_title">Give your choice</h2></header>
       <div id="choices" >
-        <input type="radio" name="option" onclick="Controller.setDefaultStartEndPos()" value="one" />
+        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="one" />
         <label class="option_label">1 start 1 destination shortsest path</label> <br>
-        <input type="radio" name="option" onclick="Controller.setDefaultStartEndPos()" value="two" checked />
+        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="two" checked />
         <label class="option_label">1 start 2 destination immediate shortsest path</label> <br>
       </div>
     </div>

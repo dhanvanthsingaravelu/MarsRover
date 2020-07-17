@@ -13,6 +13,11 @@ var Controller = StateMachine.create({
             to:   'ready'
         },
         {
+            name: 'trans',
+            from: '*',
+            to:   'none'
+        },
+        {
             name: 'search',
             from: 'starting',
             to:   'searching'
@@ -177,9 +182,11 @@ $.extend(Controller, {
                 );
                 this.path=path2.concat(path3);
             }
+            
             this.operationCount = this.operations.length;
             timeEnd = window.performance ? performance.now() : Date.now();
             this.timeSpent = (timeEnd - timeStart).toFixed(4);
+            
 
             this.loop();
         // => searching
@@ -438,7 +445,7 @@ $.extend(Controller, {
             this.dragEnd();
             return;
         }
-        if (this.can('dragEndtwo') && this.isEndPostwo(gridX, gridY)) {
+        if (($('input[name=option]:checked').val()==="two")&& this.can('dragEndtwo') && this.isEndPostwo(gridX, gridY)) {
             this.dragEndtwo();
             return;
         }
@@ -456,9 +463,18 @@ $.extend(Controller, {
             gridX = coord[0],
             gridY = coord[1];
 
-        if (this.isStartOrEndPos(gridX, gridY)) {
-            return;
+        if($('input[name=option]:checked').val()==="one"){
+            if (this.isStartOrEndPos(gridX, gridY)) {
+                return;
+            }
         }
+        else{
+            if (this.isStartOrEndPosOrEndPostwo(gridX, gridY)) {
+                return;
+            }
+        }
+
+        
 
         switch (this.current) {
         case 'draggingStart':
@@ -515,14 +531,13 @@ $.extend(Controller, {
      * It will detect user's display size, and compute the best positions.
      */
     setDefaultStartEndPos: function() {
-        this.clearFootprints();
-        this.clearStartEndpos();
+        View.clearStartEndPos();
         var width, height,
-            marginRight, availWidth,
-            centerX, centerY,
+        marginRight, availWidth,
+        centerX, centerY,
             
             
-            nodeSize = View.nodeSize;
+        nodeSize = View.nodeSize;
 
         width  = $(window).width();
         height = $(window).height();
@@ -542,6 +557,7 @@ $.extend(Controller, {
             this.setEndPostwo(centerX ,centerY +5);
             this.setEndPos(centerX + 5, centerY);
         }    
+        
     },
     setStartPos: function(gridX, gridY) {
         this.startX = gridX;
@@ -554,30 +570,10 @@ $.extend(Controller, {
         View.setEndPos(gridX, gridY);
     },
     setEndPostwo: function(gridX, gridY) {
-        console.log("controller");
         this.endXtwo = gridX;
         this.endYtwo = gridY;
         View.setEndPostwo(gridX, gridY);
     },
-    clearStartEndpos : function(){
-        if(((this.startX!=undefined)||(this.startX!=null))&&((this.startY!=undefined)||(this.startX!=null))){
-            View.clearStartEndPos(this.startX,this.startY);
-            this.startX=null;
-            this.startY=null;
-        }
-        if(((this.endX!=undefined)||(this.endX!=null))&&((this.endY!=undefined)||(this.endY!=null))){
-            View.clearStartEndPos(this.endX,this.endY);
-            this.endX=null;
-            this.endY=null;
-        }
-        if(((this.endXtwo!=undefined)||(this.endXtwo!=null))&&((this.endYtwo!=undefined)||(this.endYtwo!=null))){
-            View.clearStartEndPos(this.endXtwo,this.endYtwo);
-            this.endXtwo=null;
-            this.endYtwo=null;
-        }
-
-    },
-    
     setWalkableAt: function(gridX, gridY, walkable) {
         this.grid.setWalkableAt(gridX, gridY, walkable);
         View.setAttributeAt(gridX, gridY, 'walkable', walkable);
@@ -592,6 +588,9 @@ $.extend(Controller, {
         return gridX === this.endXtwo && gridY === this.endYtwo;
     },
     isStartOrEndPos: function(gridX, gridY) {
+        return this.isStartPos(gridX, gridY) || this.isEndPos(gridX, gridY);
+    },
+    isStartOrEndPosOrEndPostwo: function(gridX, gridY) {
         return this.isStartPos(gridX, gridY) || this.isEndPos(gridX, gridY)||this.isEndPostwo(gridX, gridY);
     },
 });

@@ -130,16 +130,6 @@ var View = {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
     },
-    clearStartEndPos: function(gridX, gridY) {
-        var coord = this.toPageCoordinate(gridX, gridY);
-        this.rects[gridY][gridX]=this.paper.rect(
-            coord[0],
-            coord[1],
-            this.nodeSize,
-            this.nodeSize
-        ).attr(this.nodeStyle.normal)
-    },
-    
     setEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNode) {
@@ -155,7 +145,6 @@ var View = {
         }
     },
     setEndPostwo: function(gridX, gridY) {
-        console.log("view")
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNodetwo) {
             this.endNodetwo = this.paper.rect(
@@ -168,7 +157,21 @@ var View = {
         } else {
             this.endNodetwo.attr({ x: coord[0], y: coord[1] }).toFront();
         }
-        console.log("viewend")
+    },
+    clearStartEndPos: function() {
+        if(this.startNode!=undefined){
+            console.log("dhan");
+            this.startNode.remove();
+            delete this.startNode;
+        }
+        if(this.endNode!=undefined){
+            this.endNode.remove();
+            delete this.endNode;
+        }
+        if(this.endNodetwo!=undefined){
+            this.endNodetwo.remove();
+            delete this.endNodetwo;
+        }
     },
    
     /**
