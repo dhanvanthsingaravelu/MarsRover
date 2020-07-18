@@ -145,14 +145,12 @@ footer {
     color: #fff;
 }
 
-.green {
-    color: #0d0;
-}
-
 .red {
     color: #ff9166;
+    font-weight: 1000;
 }
 
 .spinner {
     width: 2em;
 }
+

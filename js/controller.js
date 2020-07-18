@@ -101,7 +101,7 @@ var Controller = StateMachine.create({
 });
 
 $.extend(Controller, {
-    gridSize: [33,15], // number of nodes horizontally and vertically
+    gridSize: [36,20], // number of nodes horizontally and vertically
     operationsPerSecond: 300,
 
     /**
