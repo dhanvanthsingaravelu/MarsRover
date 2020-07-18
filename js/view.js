@@ -3,7 +3,7 @@
  * It uses raphael.js to show the grids.
  */
 var View = {
-    nodeSize: 30, // width and height of a single node, in pixel
+    nodeSize: 40, // width and height of a single node, in pixel
     nodeStyle: {
         normal: {
             fill: 'white',
@@ -15,7 +15,6 @@ var View = {
         },
         start: {
             fill: '#0d0',
-            //'background-image': '158575-200.png',
             'stroke-opacity': 0.2,
         },
         end: {
@@ -134,6 +133,7 @@ var View = {
         } else {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
+        var image_1 = this.paper.image("https://drive.google.com/file/d/1xqz77iBC9Sd6BQzhSbWiPsyT6wotAevD/view?usp=sharing", coord[0], coord[1], this.nodeSize, this.nodeSize);
     },
     setEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
