@@ -201,7 +201,7 @@
           </div>
         </div>
 
-	<h3 id="orth_jump_point_header"><a href="#">Orthogonal Jump Point Search</a></h3>
+		<h3 id="orth_jump_point_header"><a href="#">Orthogonal Jump Point Search</a></h3>
         <div id="orth_jump_point_section" class="finder_section">
           <header class="option_header">
             <h3>Heuristic</h3>
@@ -225,6 +225,33 @@
           </div>
         </div>
 
+        <h3 id="trace_header"><a href="#">Trace</a></h3>
+        <div id="trace_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="trace_heuristic" class="sub_options">
+            <input type="radio" name="trace_heuristic" value="manhattan" checked />
+            <label class="option_label">Manhattan</label> <br>
+            <input type="radio" name="trace_heuristic" value="euclidean"/>
+            <label class="option_label">Euclidean</label> <br>
+            <input type="radio" name="trace_heuristic" value="octile"/>
+            <label class="option_label">Octile</label> <br>
+            <input type="radio" name="trace_heuristic" value="chebyshev"/>
+            <label class="option_label">Chebyshev</label> <br>
+          </div>
+
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked>
+            <label class="option_label">Allow Diagonal</label> <br>
+            <input type="checkbox" class="dont_cross_corners">
+            <label class="option_label">Don't Cross Corners</label> <br>
+          </div>
+        </div>
+
       </div><!-- .accordion -->
     </div><!-- #algorithm_panel -->
 
@@ -240,5 +267,13 @@
       Project Hosted on <a href="http://github.com/qiao/PathFinding.js">Github</a>
     </footer>
 
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-52996509-1', 'auto');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>

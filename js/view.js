@@ -65,6 +65,8 @@ var View = {
      * I decomposed the task into smaller ones. Each will only generate a row.
      */
     generateGrid: function(callback) {
+        delete this.paper;
+        this.paper = Raphael('draw_area');
         var i, j, x, y,
             rect,
             normalStyle, nodeSize,
@@ -116,6 +118,9 @@ var View = {
             }
         });
     },
+    deleteGrid: function(){
+        this.rects=[];
+    },
     setStartPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.startNode) {
@@ -160,7 +165,6 @@ var View = {
     },
     clearStartEndPos: function() {
         if(this.startNode!=undefined){
-            console.log("dhan");
             this.startNode.remove();
             delete this.startNode;
         }

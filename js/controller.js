@@ -110,6 +110,11 @@ $.extend(Controller, {
     onleavenone: function() {
         var numCols = this.gridSize[0],
             numRows = this.gridSize[1];
+        View.deleteGrid();
+        delete this.grid;
+
+        width  = $(window).width();
+        height = $(window).height();
 
         this.grid = new PF.Grid(numCols, numRows);
 
@@ -139,7 +144,6 @@ $.extend(Controller, {
         // => erasingWall
     },
     onsearch: function(event, from, to) {
-        //console.log("from",from)
         if($('input[name=option]:checked').val()==="one"){
             var grid,
             timeStart, timeEnd,
@@ -533,21 +537,10 @@ $.extend(Controller, {
     setDefaultStartEndPos: function() {
         this.clearAll();
         View.clearStartEndPos();
-        var width, height,
-        marginRight, availWidth,
-        centerX, centerY,
-            
-            
-        nodeSize = View.nodeSize;
-
-        width  = $(window).width();
-        height = $(window).height();
-
-        marginRight = $('#algorithm_panel').width();
-        availWidth = width - marginRight;
-
-        centerX = Math.ceil(availWidth / 2 / nodeSize);
-        centerY = Math.floor(height / 2 / nodeSize);
+        var centerX, centerY,
+               
+        centerX = Math.floor(this.gridSize[0]/2.5);
+        centerY = Math.floor(this.gridSize[1]/2.5);
 
         if($('input[name=option]:checked').val()==="one"){
             this.setStartPos(centerX - 5, centerY);

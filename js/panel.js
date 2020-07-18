@@ -134,8 +134,7 @@ var Panel = {
             
             finder = new PF.JumpPointFinder({
               trackJumpRecursion: trackRecursion,
-              heuristic: PF.Heuristic[heuristic],
-              diagonalMovement: PF.DiagonalMovement.IfAtMostOneObstacle
+              heuristic: PF.Heuristic[heuristic]
             });
             break;
         case 'orth_jump_point_header':
@@ -143,10 +142,9 @@ var Panel = {
                                      '.track_recursion:checked').val() !== 'undefined';
             heuristic = $('input[name=orth_jump_point_heuristic]:checked').val();
 
-            finder = new PF.JumpPointFinder({
+            finder = new PF.OrthogonalJumpPointFinder({
               trackJumpRecursion: trackRecursion,
-              heuristic: PF.Heuristic[heuristic],
-              diagonalMovement: PF.DiagonalMovement.Never
+              heuristic: PF.Heuristic[heuristic]
             });
             break;
         case 'ida_header':
@@ -177,6 +175,25 @@ var Panel = {
             });
 
             break;
+
+        case 'trace_header':
+            allowDiagonal = typeof $('#trace_section ' +
+                                     '.allow_diagonal:checked').val() !== 'undefined';
+            biDirectional = typeof $('#trace_section ' +
+                                     '.bi-directional:checked').val() !=='undefined';
+            dontCrossCorners = typeof $('#trace_section ' +
+                                     '.dont_cross_corners:checked').val() !=='undefined';
+
+            heuristic = $('input[name=trace_heuristic]:checked').val();
+
+            finder = new PF.TraceFinder({
+                allowDiagonal: allowDiagonal,
+                dontCrossCorners: dontCrossCorners,
+                heuristic: PF.Heuristic[heuristic]
+            });
+
+            break;
+
         }
 
         return finder;
