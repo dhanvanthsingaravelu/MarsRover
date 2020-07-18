@@ -9,6 +9,9 @@ var View = {
             fill: 'white',
             'stroke-opacity': 0.2, // the border
         },
+        normalimage: {
+            'stroke-opacity': 0.2, // the border
+        },
         blocked: {
             fill: 'grey',
             'stroke-opacity': 0.2,
@@ -47,8 +50,9 @@ var View = {
         transformBack: 's1.0',
     },
     pathStyle: {
-        stroke: 'yellow',
+        stroke: '#FF0000',
         'stroke-width': 3,
+        'stroke-opacity': "80%"
     },
     supportedOperations: ['opened', 'closed', 'tested'],
     init: function(opts) {
@@ -123,45 +127,41 @@ var View = {
     setStartPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.startNode) {
-            this.startNode = this.paper.rect(
-                coord[0],
-                coord[1],
-                this.nodeSize,
-                this.nodeSize
-            ).attr(this.nodeStyle.normal)
-             .animate(this.nodeStyle.start, 1000);
+            this.startNode = this.paper.image("https://user-images.githubusercontent.com/52419369/87849151-e8709a80-c903-11ea-866c-e0ad7bda78c6.png", coord[0],
+             coord[1], 
+             this.nodeSize ,
+              this.nodeSize );
         } else {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
+            
         }
-        var image_1 = this.paper.image("https://drive.google.com/file/d/1xqz77iBC9Sd6BQzhSbWiPsyT6wotAevD/view?usp=sharing", coord[0], coord[1], this.nodeSize, this.nodeSize);
+        this.zoomNode(this.startNode);
     },
+    
     setEndPos: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNode) {
-            this.endNode = this.paper.rect(
-                coord[0],
-                coord[1],
-                this.nodeSize,
-                this.nodeSize
-            ).attr(this.nodeStyle.normal)
-             .animate(this.nodeStyle.end, 1000);
+            
+            this.endNode = this.paper.image("https://user-images.githubusercontent.com/52419369/87849116-a9dae000-c903-11ea-9e25-aa7f6357a589.png", coord[0],
+            coord[1], 
+            this.nodeSize ,
+             this.nodeSize );
         } else {
             this.endNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
+        this.zoomNode(this.endNode);
     },
     setEndPostwo: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
         if (!this.endNodetwo) {
-            this.endNodetwo = this.paper.rect(
-                coord[0],
-                coord[1],
-                this.nodeSize,
-                this.nodeSize
-            ).attr(this.nodeStyle.normal)
-             .animate(this.nodeStyle.end, 1000);
+            this.endNodetwo = this.paper.image("https://user-images.githubusercontent.com/52419369/87849116-a9dae000-c903-11ea-9e25-aa7f6357a589.png", coord[0],
+            coord[1], 
+            this.nodeSize ,
+             this.nodeSize );
         } else {
             this.endNodetwo.attr({ x: coord[0], y: coord[1] }).toFront();
         }
+        this.zoomNode(this.endNodetwo);
     },
     clearStartEndPos: function() {
         if(this.startNode!=undefined){
@@ -224,6 +224,7 @@ var View = {
         }, this.nodeZoomEffect.duration);
     },
     setWalkableAt: function(gridX, gridY, value) {
+        var coord = this.toPageCoordinate(gridX, gridY);
         var node, i, blockedNodes = this.blockedNodes;
         if (!blockedNodes) {
             blockedNodes = this.blockedNodes = new Array(this.numRows);
@@ -235,7 +236,8 @@ var View = {
         if (value) {
             // clear blocked node
             if (node) {
-                this.colorizeNode(node, this.rects[gridY][gridX].attr('fill'));
+                //var img = this.paper.image("",,this.nodeSize,this.nodeSize);
+                //this.colorizeNode(node, this.rects[gridY][gridX].attr('fill'));
                 this.zoomNode(node);
                 setTimeout(function() {
                     node.remove();
@@ -247,8 +249,8 @@ var View = {
             if (node) {
                 return;
             }
-            node = blockedNodes[gridY][gridX] = this.rects[gridY][gridX].clone();
-            this.colorizeNode(node, this.nodeStyle.blocked.fill);
+            node = blockedNodes[gridY][gridX] = this.paper.image("https://user-images.githubusercontent.com/52419369/87849016-f1ad3780-c902-11ea-9961-e10c167964e5.png",coord[0],coord[1],this.nodeSize,this.nodeSize);;
+            //this.colorizeNode(node, this.nodeStyle.blocked.fill);
             this.zoomNode(node);
         }
     },

@@ -44,10 +44,10 @@
     <div id="options" class="panel">
       <header><h2 class="header_title">Give your choice</h2></header>
       <div id="choices" >
-        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="one" />
+        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="one" checked  />
         <label class="option_label">1 start 1 destination shortest path</label> <br>
-        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="two" checked />
-        <label class="option_label">1 start 2 destination shortest path</label> <br>
+        <input type="radio" name="option" onclick="Controller.trans();Controller.init()" value="two" />
+        <label class="option_label">1 start 2 destination shortest path and allows path retracing</label> <br>
       </div>
     </div>
 
@@ -255,7 +255,7 @@
       </div><!-- .accordion -->
     </div><!-- #algorithm_panel -->
 
-    <div id="play_panel" class="panel right_panel">
+    <div id="play_panel" class="panel but_panel">
       <button id="button1" class="control_button">Start Search</button>
       <button id="button2" class="control_button">Pause Search</button>
       <button id="button3" class="control_button">Clear Walls</button>

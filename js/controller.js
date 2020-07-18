@@ -101,7 +101,7 @@ var Controller = StateMachine.create({
 });
 
 $.extend(Controller, {
-    gridSize: [64, 36], // number of nodes horizontally and vertically
+    gridSize: [33,15], // number of nodes horizontally and vertically
     operationsPerSecond: 300,
 
     /**
@@ -154,11 +154,7 @@ $.extend(Controller, {
                 this.startX, this.startY, this.endX, this.endY, grid
             );
             
-            this.operationCount = this.operations.length;
-            timeEnd = window.performance ? performance.now() : Date.now();
-            this.timeSpent = (timeEnd - timeStart).toFixed(4);
-
-            this.loop();
+            
         }
         else{
             var grid,path1,path2,path3,
@@ -187,14 +183,14 @@ $.extend(Controller, {
                 this.path=path2.concat(path3);
             }
             
-            this.operationCount = this.operations.length;
-            timeEnd = window.performance ? performance.now() : Date.now();
-            this.timeSpent = (timeEnd - timeStart).toFixed(4);
-            
-
-            this.loop();
-        // => searching
+        
         }
+        this.operationCount = this.operations.length;
+        timeEnd = window.performance ? performance.now() : Date.now();
+        this.timeSpent = (timeEnd - timeStart).toFixed(4);
+
+        this.loop();
+        // => searching
         
         
     },
@@ -229,8 +225,7 @@ $.extend(Controller, {
             timeSpent:  this.timeSpent,
             operationCount: this.operationCount,
         });
-        View.drawPath(this.path);
-                
+        View.drawPath(this.path);       
         // => finished
     },
     onclear: function(event, from, to) {
