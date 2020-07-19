@@ -112,6 +112,7 @@ $.extend(Controller, {
             numRows = this.gridSize[1];
         View.deleteGrid();
         delete this.grid;
+        
 
         width  = $(window).width();
         height = $(window).height();
@@ -251,6 +252,7 @@ $.extend(Controller, {
 
     onready: function() {
         console.log('=> ready');
+        
         this.setButtonStates({
             id: 1,
             text: 'Start Search',
