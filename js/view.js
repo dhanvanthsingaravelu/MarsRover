@@ -6,11 +6,12 @@ var View = {
     nodeSize: 40, // width and height of a single node, in pixel
     nodeStyle: {
         normal: {
-            fill: 'white',
-            'stroke-opacity': 0.2, // the border
+            fill: 'rgba(0,0,0,0)',
+            opacity:'50%',
+            'stroke-opacity': 2, // the border
         },
-        normalimage: {
-            'stroke-opacity': 0.2, // the border
+        bgr: {
+            opacity:'90%',
         },
         blocked: {
             fill: 'grey',
@@ -25,11 +26,11 @@ var View = {
             'stroke-opacity': 0.2,
         },
         opened: {
-            fill: '#98fb98',
+            fill: 'rgba(200,0,0,1)',
             'stroke-opacity': 0.2,
         },
         closed: {
-            fill: '#afeeee',
+            fill: 'rgba(255,255,51,1)',
             'stroke-opacity': 0.2,
         },
         failed: {
@@ -37,7 +38,7 @@ var View = {
             'stroke-opacity': 0.2,
         },
         tested: {
-            fill: '#e5e5e5',
+            fill: 'rgba(128,128,128,1)',
             'stroke-opacity': 0.2,
         },
     },
@@ -50,9 +51,9 @@ var View = {
         transformBack: 's1.0',
     },
     pathStyle: {
-        stroke: '#FF0000',
-        'stroke-width': 3,
-        'stroke-opacity': "80%"
+        stroke: '#66FF33',
+        'stroke-width': 5,
+        'stroke-opacity': "70%"
     },
     supportedOperations: ['opened', 'closed', 'tested'],
     init: function(opts) {
@@ -83,7 +84,11 @@ var View = {
             $stats      = this.$stats;
 
         paper.setSize(numCols * nodeSize, numRows * nodeSize);
-
+         delete this.bg;
+                this.bg = paper.image("https://user-images.githubusercontent.com/52419369/88086067-62bf4a00-cba4-11ea-902f-c19199ef0fae.jpg",
+                    0,0,numCols * nodeSize, numRows * nodeSize);
+                this.bg.attr(this.nodeStyle.bgr);
+            
         createRowTask = function(rowId) {
             return function(done) {
                 rects[rowId] = [];
@@ -95,14 +100,17 @@ var View = {
                     rect.attr(normalStyle);
                     rects[rowId].push(rect);
                 }
+               
                 $stats.text(
                     'generating grid ' +
                     Math.round((rowId + 1) / numRows * 100) + '%'
                 );
+               
                 done(null);
             };
             
         };
+        
 
         sleep = function(done) {
             setTimeout(function() {
@@ -136,7 +144,9 @@ var View = {
             this.startNode.attr({ x: coord[0], y: coord[1] }).toFront();
             
         }
+        
         this.zoomNode(this.startNode);
+        console.log("start node",this.startNode)
     },
     
     setEndPos: function(gridX, gridY) {
@@ -151,6 +161,7 @@ var View = {
             this.endNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
         this.zoomNode(this.endNode);
+        console.log("end node",this.endNode)
     },
     setEndPostwo: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
@@ -163,6 +174,7 @@ var View = {
             this.endNodetwo.attr({ x: coord[0], y: coord[1] }).toFront();
         }
         this.zoomNode(this.endNodetwo);
+        console.log("end node 2",this.endNodetwo)
     },
     clearStartEndPos: function() {
         if(this.startNode!=undefined){

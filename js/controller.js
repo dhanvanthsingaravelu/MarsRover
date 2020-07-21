@@ -536,17 +536,17 @@ $.extend(Controller, {
         View.clearStartEndPos();
         var centerX, centerY,
                
-        centerX = Math.floor(this.gridSize[0]/2.5);
-        centerY = Math.floor(this.gridSize[1]/2.5);
+        centerX = Math.floor(this.gridSize[0]/4.2);
+        centerY = Math.floor(this.gridSize[1]/4.5);
 
         if($('input[name=option]:checked').val()==="one"){
             this.setStartPos(centerX - 5, centerY);
-            this.setEndPos(centerX + 5, centerY);
+            this.setEndPos(centerX + 10, centerY+1);
         }
         else{
             this.setStartPos(centerX - 5, centerY);
-            this.setEndPostwo(centerX ,centerY +5);
-            this.setEndPos(centerX + 5, centerY);
+            this.setEndPostwo(centerX + 13, centerY+5);
+            this.setEndPos(centerX + 10, centerY+1);
         }    
         
     },
