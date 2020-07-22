@@ -146,7 +146,6 @@ var View = {
         }
         
         this.zoomNode(this.startNode);
-        console.log("start node",this.startNode)
     },
     
     setEndPos: function(gridX, gridY) {
@@ -161,7 +160,6 @@ var View = {
             this.endNode.attr({ x: coord[0], y: coord[1] }).toFront();
         }
         this.zoomNode(this.endNode);
-        console.log("end node",this.endNode)
     },
     setEndPostwo: function(gridX, gridY) {
         var coord = this.toPageCoordinate(gridX, gridY);
@@ -174,7 +172,6 @@ var View = {
             this.endNodetwo.attr({ x: coord[0], y: coord[1] }).toFront();
         }
         this.zoomNode(this.endNodetwo);
-        console.log("end node 2",this.endNodetwo)
     },
     clearStartEndPos: function() {
         if(this.startNode!=undefined){
