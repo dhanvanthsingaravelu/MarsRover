@@ -84,7 +84,7 @@ var View = {
             $stats      = this.$stats;
 
         paper.setSize(numCols * nodeSize, numRows * nodeSize);
-         delete this.bg;
+         View.deleteBg();
                 this.bg = paper.image("https://user-images.githubusercontent.com/52419369/88086067-62bf4a00-cba4-11ea-902f-c19199ef0fae.jpg",
                     0,0,numCols * nodeSize, numRows * nodeSize);
                 this.bg.attr(this.nodeStyle.bgr);
@@ -129,6 +129,12 @@ var View = {
                 callback();
             }
         });
+    },
+    deleteBg: function(){
+        if(this.bg!=undefined){
+            this.bg.remove();
+            delete this.bg;
+        }
     },
     deleteGrid: function(){
         this.rects=[];
