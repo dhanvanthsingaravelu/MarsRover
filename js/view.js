@@ -1,9 +1,8 @@
 /**
- * The pathfinding visualization.
- * It uses raphael.js to show the grids.
+ * Backbone behind actual display on screen
  */
 var View = {
-    nodeSize: 40, // width and height of a single node, in pixel
+    nodeSize: 40, 
     nodeStyle: {
         normal: {
             fill: 'rgba(0,0,0,0)',
@@ -47,7 +46,7 @@ var View = {
     },
     nodeZoomEffect: {
         duration: 200,
-        transform: 's1.2', // scale by 1.2x
+        transform: 's1.2', 
         transformBack: 's1.0',
     },
     pathStyle: {
@@ -62,12 +61,8 @@ var View = {
         this.paper        = Raphael('draw_area');
         this.$stats       = $('#stats');
     },
-    /**
-     * Generate the grid asynchronously.
-     * This method will be a very expensive task.
-     * Therefore, in order to not to block the rendering of browser ui,
-     * I decomposed the task into smaller ones. Each will only generate a row.
-     */
+ 
+    
     generateGrid: function(callback) {
         delete this.paper;
         this.paper = Raphael('draw_area');
@@ -173,7 +168,7 @@ var View = {
             this.endNodetwo = this.paper.image("https://user-images.githubusercontent.com/52419369/87849116-a9dae000-c903-11ea-9e25-aa7f6357a589.png", coord[0],
             coord[1], 
             this.nodeSize ,
-             this.nodeSize );
+             this.nodeSize );// placing an image inside the paper with given sizes
         } else {
             this.endNodetwo.attr({ x: coord[0], y: coord[1] }).toFront();
         }
@@ -194,9 +189,7 @@ var View = {
         }
     },
    
-    /**
-     * Set the attribute of the node at the given coordinate.
-     */
+
     setAttributeAt: function(gridX, gridY, attr, value) {
         var color, nodeStyle = this.nodeStyle;
         switch (attr) {
@@ -219,8 +212,6 @@ var View = {
             this.setCoordDirty(gridX, gridY, true);
             break;
         case 'parent':
-            // XXX: Maybe draw a line from this node to its parent?
-            // This would be expensive.
             break;
         default:
             console.error('unsupported operation: ' + attr + ':' + value);
@@ -250,10 +241,7 @@ var View = {
         }
         node = blockedNodes[gridY][gridX];
         if (value) {
-            // clear blocked node
             if (node) {
-                //var img = this.paper.image("",,this.nodeSize,this.nodeSize);
-                //this.colorizeNode(node, this.rects[gridY][gridX].attr('fill'));
                 this.zoomNode(node);
                 setTimeout(function() {
                     node.remove();
@@ -261,13 +249,11 @@ var View = {
                 blockedNodes[gridY][gridX] = null;
             }
         } else {
-            // draw blocked node
             if (node) {
                 return;
             }
             node = blockedNodes[gridY][gridX] = this.paper.image("https://user-images.githubusercontent.com/52419369/87849016-f1ad3780-c902-11ea-9961-e10c167964e5.png",coord[0],coord[1],this.nodeSize,this.nodeSize);;
-            //this.colorizeNode(node, this.nodeStyle.blocked.fill);
-            this.zoomNode(node);
+            this.zoomNode(node);// Placing the crater in place of obstacle
         }
     },
     clearFootprints: function() {
@@ -301,9 +287,7 @@ var View = {
         var svgPath = this.buildSvgPath(path);
         this.path = this.paper.path(svgPath).attr(this.pathStyle);
     },
-    /**
-     * Given a path, build its SVG represention.
-     */
+
     buildSvgPath: function(path) {
         var i, strs = [], size = this.nodeSize;
 
@@ -321,18 +305,14 @@ var View = {
             this.path.remove();
         }
     },
-    /**
-     * Helper function to convert the page coordinate to grid coordinate
-     */
+
     toGridCoordinate: function(pageX, pageY) {
         return [
             Math.floor(pageX / this.nodeSize),
             Math.floor(pageY / this.nodeSize)
         ];
     },
-    /**
-     * helper function to convert the grid coordinate to page coordinate
-     */
+
     toPageCoordinate: function(gridX, gridY) {
         return [
             gridX * this.nodeSize,
